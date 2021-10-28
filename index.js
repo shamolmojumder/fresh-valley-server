@@ -25,6 +25,21 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   console.log("err",err);
   const productCollection = client.db("freshvalley").collection("products");
+  app.get('/allProducts',(req,res)=>{
+      productCollection.find()
+      .toArray((err,items)=>{
+        console.log("items",items);
+        res.send(items)
+      })
+  })
+
+  app.get('/productList',(req,res)=>{
+    productCollection.find()
+    .toArray((err,products)=>{
+      res.send(products)
+    })
+  })
+  // add product from admin
   app.post('/addProduct',(req,res)=>{
     const newProduct=req.body;
     console.log("adding a new product",newProduct);
@@ -43,5 +58,5 @@ client.connect(err => {
 
 
 app.listen(port, () => {
-  console.log("object");
+  console.log("server running at 5055");
 })
