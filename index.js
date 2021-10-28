@@ -8,7 +8,7 @@ const port =process.env.PORT || 5055
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 
 
@@ -25,6 +25,15 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   console.log("err",err);
   const productCollection = client.db("freshvalley").collection("products");
+  app.post('/addProduct',(req,res)=>{
+    const newProduct=req.body;
+    console.log("adding a new product",newProduct);
+    productCollection.insertOne(newProduct)
+    .then(result=>{
+      console.log("inserted count",result);
+      res.send(result.insertedCount>0)
+    })
+  })
   console.log("database connected");
   // perform actions on the collection object
   // client.close();
