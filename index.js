@@ -51,10 +51,20 @@ client.connect(err => {
     })
   })
 
+  // app.delete('/delete/:id',(req,res)=>{
+  //   // const id=ObjectId(req.params.id);
+  //   console.log(req.params.id);
+  //   // console.log("delete this ",id);
+  //   // productCollection.findOneAndDelete({ _id: ObjectId(req.params.id)})
+  //   // .then(documents=>{
+  //   //   res.send(documents.deletedCount>0)
+  //   // })
+  // })
+
   app.delete('/delete/:id',(req,res)=>{
-    // const id=ObjectId(req.params.id);
-    console.log("delete this ",id);
-    productCollection.findOneAndDelete({ _id: ObjectId(req.params.id)})
+    // console.log(req.params.id);
+    const id=ObjectId(req.params.id)
+    productCollection.findOneAndDelete({_id:id})
     .then(documents=>{
       res.send(documents.deletedCount>0)
     })
